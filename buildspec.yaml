@@ -10,8 +10,8 @@ phases:
       - echo Build started on `date`
       - echo Building docker images
       - docker build -t  web:1 .
-      - docker tag web:1 196236753581.dkr.ecr.us-east-1.amazonaws.com/soban:latest
-      - docker tag web:1 196236753581.dkr.ecr.us-east-1.amazonaws.com/soban:$CODEBUILD_BUILD_NUMBER
+      - docker tag web:1 account_id.dkr.ecr.us-east-1.amazonaws.com/soban:latest
+      - docker tag web:1 account_id.dkr.ecr.us-east-1.amazonaws.com/soban:$CODEBUILD_BUILD_NUMBER
       
       - docker images 
   post_build:
