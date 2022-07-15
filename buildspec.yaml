@@ -19,9 +19,9 @@ phases:
       - echo Pushind docker images
       - docker push account_id.dkr.ecr.us-east-1.amazonaws.com/soban:latest
       - docker push account_id.dkr.ecr.us-east-1.amazonaws.com/soban:$CODEBUILD_BUILD_NUMBER
-      - yum install jq -y
+      
       - ContainerName="web1"
-      - printf '[{"name":"web1","imageUri":"196236753581.dkr.ecr.us-east-1.amazonaws.com/soban"}]' > imagedefinitions.json
+      - printf '[{"name":"web1","imageUri":"account_id.dkr.ecr.region_id.amazonaws.com/soban"}]' > imagedefinitions.json
       - cat imagedefinitions.json
       
 artifacts:
