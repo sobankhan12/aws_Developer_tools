@@ -1,0 +1,30 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo Logging into amazon ecr
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building docker images
+      - docker build -t  web:1 .
+      - docker tag web:1 196236753581.dkr.ecr.us-east-1.amazonaws.com/soban:latest
+      - docker tag web:1 196236753581.dkr.ecr.us-east-1.amazonaws.com/soban:$CODEBUILD_BUILD_NUMBER
+      
+      - docker images 
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushind docker images
+      - docker push account_id.dkr.ecr.us-east-1.amazonaws.com/soban:latest
+      - docker push account_id.dkr.ecr.us-east-1.amazonaws.com/soban:$CODEBUILD_BUILD_NUMBER
+      - yum install jq -y
+      - ContainerName="web1"
+      - printf '[{"name":"web1","imageUri":"196236753581.dkr.ecr.us-east-1.amazonaws.com/soban"}]' > imagedefinitions.json
+      - cat imagedefinitions.json
+      
+artifacts:
+    files:
+        - imagedefinitions.json
